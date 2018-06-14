@@ -1,23 +1,35 @@
 {
   "name": "qrcode.js",
-  "version": "0.0.0",
   "description": "QR Code Generator",
+  "version": "0.0.0",
+  "main": "build/qrcode.cjs.js",
+  "module": "build/qrcode.esm.js",
+  "browser": "build/qrcode.umd.js",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-flowtype": "^2.49.3",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "eslint-config-airbnb-base": "^12.1.0"
+    "rollup": "^0.60.7",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0"
   },
   "scripts": {
-    "eslint": "eslint src"
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "node test/test.js",
+    "pretest": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,6 +38,10 @@
   "author": "",
   "bugs": {
     "url": "https://github.com/AdactiveSAS/qrcode.js/issues"
+  },
+  "files": [
+    "build"
+  ],
   "dependencies": {
     "qrcode-generator": "^1.4.0"
   }
