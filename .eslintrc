@@ -1,9 +1,6 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
-  "plugins": [
-    "flowtype"
-  ],
   "env": {
     "browser": true
   },
@@ -19,13 +16,10 @@
     "no-param-reassign": 0,
     "no-prototype-builtins": 0,
     "no-continue": 0,
+    "no-mixed-operators": 0,
     "react/jsx-indent-props": [2, 4],
     "react/jsx-indent": [2, 4],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "flowtype/boolean-style": [
-      2,
-      "boolean"
-    ]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   },
   "globals": {
     "ELECTRON": true,
