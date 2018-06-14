@@ -1,0 +1,25 @@
+{
+  "name": "qrcode.js",
+  "version": "0.0.0",
+  "description": "QR Code Generator",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  },
+  "scripts": {
+    "eslint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdactiveSAS/qrcode.js.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/AdactiveSAS/qrcode.js/issues"
+  }
+}
