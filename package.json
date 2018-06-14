@@ -26,5 +26,7 @@
   "author": "",
   "bugs": {
     "url": "https://github.com/AdactiveSAS/qrcode.js/issues"
+  "dependencies": {
+    "qrcode-generator": "^1.4.0"
   }
 }

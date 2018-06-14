@@ -1,5 +1,5 @@
+import VendorQrCode from 'qrcode-generator';
 import defaultOptions from './defaultOptions';
-import VendorQrCode from './vendor/qrCode';
 
 export const MODES = {
     NORMAL: 0,
