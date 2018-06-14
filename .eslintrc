@@ -1,14 +1,34 @@
 {
-  "extends": "airbnb-base",
-  "env" : {
-    "browser": true,
-    "node": true
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
+  "env": {
+    "browser": true
   },
   "rules": {
-    "import/prefer-default-export": "off",
-    "class-methods-use-this": "off",
-    "no-prototype-builtins": "off",
-    "no-underscore-dangle": ["off"],
-    "no-plusplus": ["off"]
+    "no-underscore-dangle": 0,
+    "import/no-extraneous-dependencies": 0,
+    "indent": ["error", 4],
+    "no-plusplus": 0,
+    "no-console": 0,
+    "comma-dangle": 0,
+    "max-len": ["warn", 180],
+    "no-restricted-syntax": 0,
+    "no-param-reassign": 0,
+    "no-prototype-builtins": 0,
+    "no-continue": 0,
+    "react/jsx-indent-props": [2, 4],
+    "react/jsx-indent": [2, 4],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "flowtype/boolean-style": [
+      2,
+      "boolean"
+    ]
+  },
+  "globals": {
+    "ELECTRON": true,
+    "isElectron": true
   }
 }
