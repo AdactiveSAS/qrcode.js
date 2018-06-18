@@ -5,6 +5,15 @@
   "main": "build/qrcode.cjs.js",
   "module": "build/qrcode.esm.js",
   "browser": "build/qrcode.umd.js",
+  "author": "Stanley Ong <stanley.ong@adactive.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdactiveSAS/qrcode.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AdactiveSAS/qrcode.js/issues"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -25,6 +34,9 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0"
   },
+  "dependencies": {
+    "qrcode-generator": "^1.4.0"
+  },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -32,23 +44,11 @@
     "pretest": "npm run build",
     "eslint": "eslint src"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AdactiveSAS/qrcode.js.git"
-  },
-  "author": "Stanley Ong <stanley.ong@adactive.com>",
-  "license": "MIT",
   "keywords": [
     "adsum",
     "qrcode"
   ],
-  "bugs": {
-    "url": "https://github.com/AdactiveSAS/qrcode.js/issues"
-  },
   "files": [
     "build"
-  ],
-  "dependencies": {
-    "qrcode-generator": "^1.4.0"
-  }
+  ]
 }
