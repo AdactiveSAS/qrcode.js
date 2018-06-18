@@ -305,7 +305,7 @@ function loadImage(element, options) {
     }
 }
 
-function createCanvas(element, options) {
+function generateCanvas(element, options) {
     const { mode } = options;
 
     if (mode === 3 || mode === 4) {
@@ -333,10 +333,10 @@ class qrcode {
 
         if (this.element && this.element instanceof HTMLDivElement) {
             const newCanvasElement = document.createElement('canvas');
-            createCanvas(newCanvasElement, options);
+            generateCanvas(newCanvasElement, options);
             this.element.appendChild(newCanvasElement);
         } else if (this.element && this.element instanceof HTMLCanvasElement) {
-            this.element = createCanvas(this.element, options);
+            this.element = generateCanvas(this.element, options);
         }
         return this.element;
     }
