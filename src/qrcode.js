@@ -10,22 +10,25 @@ export const MODES = {
 };
 
 function drawBackgroundLabel(qr, context, settings) {
-    const { size } = settings;
-    const font = `bold ${settings.mSize * size}px ${settings.fontname}`;
+    const {
+        size, mSize, fontname, label, mPosX, mPosY, mode, fontcolor
+    } = settings;
+
+    const font = `bold ${mSize * size}px ${fontname}`;
     const ctx = context;
 
     ctx.font = font;
 
-    const w = ctx.measureText(settings.label).width;
-    const sh = settings.mSize;
+    const w = ctx.measureText(label).width;
+    const sh = mSize;
     const sw = w / size;
-    const sl = (1 - sw) * settings.mPosX;
-    const st = (1 - sh) * settings.mPosY;
+    const sl = (1 - sw) * mPosX;
+    const st = (1 - sh) * mPosY;
     const sr = sl + sw;
     const sb = st + sh;
     const pad = 0.01;
 
-    if (settings.mode === 1) {
+    if (mode === 1) {
         // Strip
         qr.addBlank(0, st - pad, size, sb + pad);
     } else {
@@ -33,24 +36,27 @@ function drawBackgroundLabel(qr, context, settings) {
         qr.addBlank(sl - pad, st - pad, sr + pad, sb + pad);
     }
 
-    context.fillStyle = settings.fontcolor;
+    context.fillStyle = fontcolor;
     context.font = font;
-    context.fillText(settings.label, sl * size, st * size + 0.75 * settings.mSize * size);
+    context.fillText(label, sl * size, st * size + 0.75 * mSize * size);
 }
 
 function drawBackgroundImage(qr, context, settings) {
-    const { size } = settings;
-    const w = settings.image.naturalWidth || 1;
-    const h = settings.image.naturalHeight || 1;
-    const sh = settings.mSize;
+    const {
+        size, image, mSize, mPosX, mPosY, mode
+    } = settings;
+
+    const w = image.naturalWidth || 1;
+    const h = image.naturalHeight || 1;
+    const sh = mSize;
     const sw = sh * w / h;
-    const sl = (1 - sw) * settings.mPosX;
-    const st = (1 - sh) * settings.mPosY;
+    const sl = (1 - sw) * mPosX;
+    const st = (1 - sh) * mPosY;
     const sr = sl + sw;
     const sb = st + sh;
     const pad = 0.01;
 
-    if (settings.mode === 3) {
+    if (mode === 3) {
         // Strip
         qr.addBlank(0, st - pad, size, sb + pad);
     } else {
@@ -58,16 +64,19 @@ function drawBackgroundImage(qr, context, settings) {
         qr.addBlank(sl - pad, st - pad, sr + pad, sb + pad);
     }
 
-    context.drawImage(settings.image, sl * size, st * size, sw * size, sh * size);
+    context.drawImage(image, sl * size, st * size, sw * size, sh * size);
 }
 
 function drawBackground(qr, context, settings) {
-    if (settings.background) {
-        context.fillStyle = settings.background;
-        context.fillRect(settings.left, settings.top, settings.size, settings.size);
+    const {
+        background, left, top, size, mode
+    } = settings;
+
+    if (background) {
+        context.fillStyle = background;
+        context.fillRect(left, top, size, size);
     }
 
-    const { mode } = settings;
     if (mode === 1 || mode === 2) {
         drawBackgroundLabel(qr, context, settings);
     } else if (mode === 3 || mode === 4) {
@@ -175,27 +184,31 @@ function drawModuleRounded(qr, context, settings, left, top, width, row, col) {
 
 function drawModules(qr, context, settings) {
     const { moduleCount } = qr;
-    const moduleSize = settings.size / moduleCount;
+    const {
+        size, radius, left, top, fill
+    } = settings;
+
+    const moduleSize = size / moduleCount;
     let fn = drawModuleDefault;
     let row;
     let col;
 
-    if (settings.radius > 0 && settings.radius <= 0.5) {
+    if (radius > 0 && radius <= 0.5) {
         fn = drawModuleRounded;
     }
 
     context.beginPath();
     for (row = 0; row < moduleCount; row += 1) {
         for (col = 0; col < moduleCount; col += 1) {
-            const l = settings.left + col * moduleSize;
-            const t = settings.top + row * moduleSize;
+            const l = left + col * moduleSize;
+            const t = top + row * moduleSize;
             const w = moduleSize;
 
             fn(qr, context, settings, l, t, w, row, col);
         }
     }
 
-    context.fillStyle = settings.fill;
+    context.fillStyle = fill;
     context.fill();
 }
 
@@ -293,7 +306,9 @@ function loadImage(element, options) {
 }
 
 function createCanvas(element, options) {
-    if (options.mode === 3 || options.mode === 4) {
+    const { mode } = options;
+
+    if (mode === 3 || mode === 4) {
         return loadImage(element, options);
     }
     return drawOnCanvas(element, options);
