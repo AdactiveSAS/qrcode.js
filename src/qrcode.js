@@ -263,14 +263,16 @@ function createMinQRCode(text, level, minVersion, maxVersion, quiet) {
     for (let version = minVersion; version <= maxVersion; version += 1) {
         try {
             return createQRCode(text, level, version, quiet);
-        } catch (err) { /* empty */ }
+        } catch (err) {
+            console.log(err);
+        }
     }
-    return undefined;
+
+    throw new Error('Too much data - Unable to generate QrCode');
 }
 
 function drawOnCanvas(element, options, imageElement = null) {
     const settings = { ...options, image: imageElement };
-    console.log('[CHECKING ELEMENT IN DRAW CANVAS] : ', element, options, imageElement);
 
     element.width = settings.size;
     element.height = settings.size;
@@ -294,14 +296,15 @@ function loadImage(element, options) {
     const imageElement = new Image();
 
     imageElement.addEventListener('load', () => drawOnCanvas(element, options, imageElement));
-    imageElement.addEventListener('error', () => {
+    imageElement.addEventListener('error', (e) => {
+        console.log(e);
         throw new Error('Please provide a valid image');
     });
 
     if (image && typeof image === 'string') {
         imageElement.src = image;
     } else {
-        throw new Error('An Image is required for Mode 3 and Mode 4');
+        throw new TypeError('Please provide a url to an image for Mode DRAW_WITH_IMAGE_STRIP and DRAW_WITH_IMAGE_BOX');
     }
 }
 
