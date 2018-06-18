@@ -324,18 +324,18 @@ class qrcode {
      * @returns {*}
      */
     generate(opts) {
-        if (!(this.element.tagName === 'DIV' || this.element.tagName === 'CANVAS')) {
+        if (!(this.element instanceof HTMLDivElement || this.element instanceof HTMLCanvasElement)) {
             console.log(`[You provided an ${this.element.tagName} element]`);
             throw new Error('Please provide a div element or canvas element render a qrCode canvas');
         }
 
         const options = Object.assign(defaultOptions, opts);
 
-        if (this.element && this.element.tagName === 'DIV') {
+        if (this.element && this.element instanceof HTMLDivElement) {
             const newCanvasElement = document.createElement('canvas');
             createCanvas(newCanvasElement, options);
             this.element.appendChild(newCanvasElement);
-        } else if (this.element && this.element.tagName === 'CANVAS') {
+        } else if (this.element && this.element instanceof HTMLCanvasElement) {
             this.element = createCanvas(this.element, options);
         }
         return this.element;
