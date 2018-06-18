@@ -178,7 +178,10 @@ function drawModuleRounded(qr, context, settings, left, top, width, row, col) {
     if (center) {
         drawModuleRoundedDark(context, left, top, right, bottom, radius, !north && !west, !north && !east, !south && !east, !south && !west);
     } else {
-        drawModuleRoundendLight(context, left, top, right, bottom, radius, north && west && northwest, north && east && northeast, south && east && southeast, south && west && southwest);
+        drawModuleRoundendLight(
+            context, left, top, right, bottom, radius, north && west && northwest, north && east && northeast,
+            south && east && southeast, south && west && southwest
+        );
     }
 }
 
@@ -237,7 +240,7 @@ function createQRCode(text, level, version, quiet) {
         const prevIsDark = qr.isDark;
         const moduleSize = 1 / quietModuleCount;
 
-        qr.isDark = function (row, col) {
+        qr.isDark = function qrIsDark(row, col) {
             const ml = col * moduleSize;
             const mt = row * moduleSize;
             const mr = ml + moduleSize;
