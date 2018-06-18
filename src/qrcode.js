@@ -305,39 +305,34 @@ function loadImage(element, options) {
     }
 }
 
-function generateCanvas(element, options) {
-    const { mode } = options;
-
-    if (mode === 3 || mode === 4) {
-        return loadImage(element, options);
-    }
-    return drawOnCanvas(element, options);
-}
-
 class qrcode {
     constructor(ele) {
         this.element = ele;
-    }
+        this.canvasElement = null;
 
-    /**
-     * Returns a Promise resolved when done with the canvas element
-     * @returns {*}
-     */
-    generate(opts) {
         if (!(this.element instanceof HTMLDivElement || this.element instanceof HTMLCanvasElement)) {
-            console.log(`[You provided an ${this.element.tagName} element]`);
-            throw new Error('Please provide a div element or canvas element render a qrCode canvas');
+            throw new TypeError('Please provide a div element or canvas element render a qrCode canvas');
         }
-
-        const options = Object.assign(defaultOptions, opts);
 
         if (this.element && this.element instanceof HTMLDivElement) {
-            const newCanvasElement = document.createElement('canvas');
-            generateCanvas(newCanvasElement, options);
-            this.element.appendChild(newCanvasElement);
-        } else if (this.element && this.element instanceof HTMLCanvasElement) {
-            this.element = generateCanvas(this.element, options);
+            this.canvasElement = document.createElement('canvas');
+            this.element.appendChild(this.canvasElement);
         }
+    }
+
+    generate(opts) {
+        const options = Object.assign(defaultOptions, opts);
+
+        if (this.canvasElement && (options.mode === 3 || options.mode === 4)) {
+            loadImage(this.canvasElement, options);
+        } else if (this.canvasElement) {
+            drawOnCanvas(this.canvasElement, options);
+        } else if (this.element && (options.mode === 3 || options.mode === 4)) {
+            loadImage(this.element, options);
+        } else if (this.element) {
+            drawOnCanvas(this.element, options);
+        }
+
         return this.element;
     }
 }
