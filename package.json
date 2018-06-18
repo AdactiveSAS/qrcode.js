@@ -36,7 +36,12 @@
     "type": "git",
     "url": "git+https://github.com/AdactiveSAS/qrcode.js.git"
   },
-  "author": "",
+  "author": "Stanley Ong <stanley.ong@adactive.com>",
+  "license": "MIT",
+  "keywords": [
+    "adsum",
+    "qrcode"
+  ],
   "bugs": {
     "url": "https://github.com/AdactiveSAS/qrcode.js/issues"
   },
