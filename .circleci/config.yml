@@ -34,6 +34,21 @@ jobs:
                         - node_modules
                         - yarn.lock
             - run: yarn build
+    publish:
+        working_directory: ~/repo
+        docker:
+            - image: circleci/node:9
+        steps:
+            - checkout
+            - restore_cache: # special step to restore the dependency cache
+                    key: dependency-cache-{{ checksum "package.json" }}
+          - run: yarn install
+          - save_cache:
+                key: dependency-cache-{{ checksum "package.json" }}
+                paths:
+                    - node_modules
+                    - yarn.lock
+          - run: npm publish
 
 workflows:
     version: 2
@@ -46,3 +61,11 @@ workflows:
             - build:
                 requires:
                     - eslint
+            - publish:
+                requires:
+                    - eslint
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /v[0-9]+\.[0-9]+\.[0-9]+.*/
