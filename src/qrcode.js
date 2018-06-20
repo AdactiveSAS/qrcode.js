@@ -275,40 +275,46 @@ function createMinQRCode(text, level, minVersion, maxVersion, quiet) {
 }
 
 function drawOnCanvas(element, options, imageElement = null) {
-    const settings = { ...options, image: imageElement };
+    return new Promise((resolve) => {
+        const settings = { ...options, image: imageElement };
 
-    element.width = settings.size;
-    element.height = settings.size;
+        element.width = settings.size;
+        element.height = settings.size;
 
-    const qr = createMinQRCode(settings.text, settings.ecLevel, settings.minVersion, settings.maxVersion, settings.quiet);
+        const qr = createMinQRCode(settings.text, settings.ecLevel, settings.minVersion, settings.maxVersion, settings.quiet);
 
-    if (!qr) {
-        return null;
-    }
+        if (!qr) {
+            resolve(null);
+        }
 
-    const context = element.getContext('2d');
+        const context = element.getContext('2d');
 
-    drawBackground(qr, context, settings);
-    drawModules(qr, context, settings);
+        drawBackground(qr, context, settings);
+        drawModules(qr, context, settings);
 
-    return element;
+        resolve(element);
+    });
 }
 
 function loadImage(element, options) {
-    const { image } = options;
-    const imageElement = new Image();
+    return new Promise((resolve, reject) => {
+        const { image } = options;
+        const imageElement = new Image();
 
-    imageElement.addEventListener('load', () => drawOnCanvas(element, options, imageElement));
-    imageElement.addEventListener('error', (e) => {
-        console.log(e);
-        throw new Error('Please provide a valid image');
+        imageElement.addEventListener('load', () => {
+            drawOnCanvas(element, options, imageElement).then(() => resolve());
+        });
+        imageElement.addEventListener('error', (e) => {
+            console.log(e);
+            reject(new Error('Please provide a valid image'));
+        });
+
+        if (image && typeof image === 'string') {
+            imageElement.src = image;
+        } else {
+            reject(new TypeError('Please provide a url to an image for Mode DRAW_WITH_IMAGE_STRIP and DRAW_WITH_IMAGE_BOX'));
+        }
     });
-
-    if (image && typeof image === 'string') {
-        imageElement.src = image;
-    } else {
-        throw new TypeError('Please provide a url to an image for Mode DRAW_WITH_IMAGE_STRIP and DRAW_WITH_IMAGE_BOX');
-    }
 }
 
 class qrcode {
@@ -335,15 +341,16 @@ class qrcode {
      * @returns {null|*}
      */
     generate(opts) {
+        let promise = Promise.resolve();
         const options = Object.assign(defaultOptions, opts);
 
         if (this.canvasElement && (options.mode === 3 || options.mode === 4)) {
-            loadImage(this.canvasElement, options);
+            promise = promise.then(() => loadImage(this.canvasElement, options));
         } else if (this.canvasElement) {
-            drawOnCanvas(this.canvasElement, options);
+            promise = promise.then(() => drawOnCanvas(this.canvasElement, options));
         }
 
-        return this.element;
+        return promise;
     }
 }
 
