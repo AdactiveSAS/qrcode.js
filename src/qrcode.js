@@ -321,6 +321,7 @@ class qrcode {
     constructor(ele) {
         this.element = null;
         this.canvasElement = null;
+        this.image = null;
 
         if (!(ele instanceof HTMLDivElement || ele instanceof HTMLCanvasElement)) {
             throw new TypeError('Please provide a div element or canvas element render a qrCode canvas');
@@ -350,7 +351,15 @@ class qrcode {
             promise = promise.then(() => drawOnCanvas(this.canvasElement, options));
         }
 
+        promise = promise.then(() => {
+            this.image = this.canvasElement.toDataURL();
+        });
+
         return promise;
+    }
+
+    getImage() {
+        return this.image;
     }
 }
 
