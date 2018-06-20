@@ -329,6 +329,11 @@ class qrcode {
         }
     }
 
+    /**
+     * Method to generate QrCode
+     * @param opts
+     * @returns {null|*}
+     */
     generate(opts) {
         const options = Object.assign(defaultOptions, opts);
 
