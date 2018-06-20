@@ -313,16 +313,19 @@ function loadImage(element, options) {
 
 class qrcode {
     constructor(ele) {
-        this.element = ele;
+        this.element = null;
         this.canvasElement = null;
 
-        if (!(this.element instanceof HTMLDivElement || this.element instanceof HTMLCanvasElement)) {
+        if (!(ele instanceof HTMLDivElement || ele instanceof HTMLCanvasElement)) {
             throw new TypeError('Please provide a div element or canvas element render a qrCode canvas');
         }
 
-        if (this.element && this.element instanceof HTMLDivElement) {
+        if (ele && ele instanceof HTMLDivElement) {
+            this.element = ele;
             this.canvasElement = document.createElement('canvas');
             this.element.appendChild(this.canvasElement);
+        } else if (ele && ele instanceof HTMLCanvasElement) {
+            this.canvasElement = ele;
         }
     }
 
@@ -333,10 +336,6 @@ class qrcode {
             loadImage(this.canvasElement, options);
         } else if (this.canvasElement) {
             drawOnCanvas(this.canvasElement, options);
-        } else if (this.element && (options.mode === 3 || options.mode === 4)) {
-            loadImage(this.element, options);
-        } else if (this.element) {
-            drawOnCanvas(this.element, options);
         }
 
         return this.element;
