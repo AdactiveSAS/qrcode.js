@@ -19,21 +19,6 @@ jobs:
                         - node_modules
                         - yarn.lock
             - run: yarn eslint
-    build:
-        working_directory: ~/repo
-        docker:
-            - image: circleci/node:9
-        steps:
-            - checkout
-            - restore_cache: # special step to restore the dependency cache
-                    key: dependency-cache-{{ checksum "package.json" }}
-            - run: yarn install
-            - save_cache:
-                    key: dependency-cache-{{ checksum "package.json" }}
-                    paths:
-                        - node_modules
-                        - yarn.lock
-            - run: yarn build
     publish:
         working_directory: ~/repo
         docker:
@@ -48,6 +33,9 @@ jobs:
                     paths:
                         - node_modules
                         - yarn.lock
+            - run:
+                    name: Authenticate with registry
+                    command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >
             - run: npm publish
 
 workflows:
@@ -58,9 +46,6 @@ workflows:
                 filters:
                     tags:
                         only: /.*/
-            - build:
-                requires:
-                    - eslint
             - publish:
                 requires:
                     - eslint
@@ -68,4 +53,4 @@ workflows:
                     branches:
                         ignore: /.*/
                     tags:
-                        only: /v[0-9]+\.[0-9]+\.[0-9]+.*/ 
+                        only: /v[0-9]+\.[0-9]+\.[0-9]+.*/

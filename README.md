@@ -1,6 +1,5 @@
 # qrcode.js
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
-[![CircleCI](https://circleci.com/gh/AdactiveSAS/qrcode.js.svg?style=svg)](https://circleci.com/gh/AdactiveSAS/qrcode.js)
 ![circleCi](https://circleci.com/gh/AdactiveSAS/qrcode.js.svg?style=shield&circle-token=:circle-token)
 
 <p align="center">
@@ -114,6 +113,7 @@ const options = {
 MIT License (MIT)
 
 The word "QR Code" is registered trademark of DENSO WAVE INCORPORATED 
+
 http://www.denso-wave.com/qrcode/faqpatent-e.html
 
 ## Special Thanks

@@ -38,6 +38,7 @@
     "qrcode-generator": "^1.4.0"
   },
   "scripts": {
+    "prepublish": "npm run build",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "node test/test.js",
@@ -46,9 +47,14 @@
   },
   "keywords": [
     "adsum",
-    "qrcode"
+    "qrcode",
+    "generator",
+    "image",
+    "label",
+    "color"
   ],
   "files": [
-    "build"
+    "build",
+    "src"
   ]
 }
