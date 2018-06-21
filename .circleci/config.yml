@@ -35,7 +35,7 @@ jobs:
                         - yarn.lock
             - run:
                     name: Authenticate with registry
-                    command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >
+                    command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
             - run: npm publish
 
 workflows:
