@@ -11,12 +11,8 @@ const configBrowser = {
         name: 'QrCode',
         file: pkg.browser,
         format: 'umd',
-        globals: {
-            'qrcode-generator': 'VendorQrCode'
-        },
         sourcemap: true
     },
-    external: ['qrcode-generator'],
     plugins: [
         babel({ exclude: ['node_modules/**'] }),
         resolve(),
