@@ -266,14 +266,14 @@ function createMinQRCode(text, level, minVersion, maxVersion, quiet) {
     throw new Error('Unable to generate QrCode');
 }
 
-function drawOnCanvas(element, options, imageElement = null) {
+function drawOnCanvas(element, text, options, imageElement = null) {
     return new Promise((resolve) => {
         const settings = { ...options, image: imageElement };
 
         element.width = settings.size;
         element.height = settings.size;
 
-        const qr = createMinQRCode(settings.text, settings.ecLevel, settings.minVersion, settings.maxVersion, settings.quiet);
+        const qr = createMinQRCode(text, settings.ecLevel, settings.minVersion, settings.maxVersion, settings.quiet);
 
         if (!qr) {
             resolve(null);
@@ -288,13 +288,13 @@ function drawOnCanvas(element, options, imageElement = null) {
     });
 }
 
-function loadImage(element, options) {
+function loadImage(element, text, options) {
     return new Promise((resolve, reject) => {
         const { image } = options;
         const imageElement = new Image();
 
         imageElement.addEventListener('load', () => {
-            drawOnCanvas(element, options, imageElement).then(() => resolve());
+            drawOnCanvas(element, text, options, imageElement).then(() => resolve());
         });
         imageElement.addEventListener('error', (e) => {
             console.log(e);
@@ -333,14 +333,14 @@ class qrcode {
      * @param opts
      * @returns {null|*}
      */
-    generate(opts) {
+    generate(text, opts) {
         let promise = Promise.resolve();
         const options = Object.assign(defaultOptions, opts);
 
         if (this.canvasElement && (options.mode === 3 || options.mode === 4)) {
-            promise = promise.then(() => loadImage(this.canvasElement, options));
+            promise = promise.then(() => loadImage(this.canvasElement, text, options));
         } else if (this.canvasElement) {
-            promise = promise.then(() => drawOnCanvas(this.canvasElement, options));
+            promise = promise.then(() => drawOnCanvas(this.canvasElement, text, options));
         }
 
         promise = promise.then(() => {

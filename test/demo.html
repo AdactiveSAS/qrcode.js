@@ -25,7 +25,6 @@
             const qrCodeSetting = {
                 size: 400,
                 minVersion: 8,
-                text: 'http://adactive.com/',
                 background: '#fff',
                 mode: QrCode.MODES.DRAW_WITH_IMAGE_STRIP,
                 radius: 0.5,
@@ -35,7 +34,7 @@
 
             let qrCodeImageUrl = null;
 
-            qrCode.generate(qrCodeSetting)
+            qrCode.generate('https://adactive.com', qrCodeSetting)
                 .then(() => {
                     qrCodeImageUrl = qrCode.getImage();
                     console.log("[IMAGE URL] : ", qrCodeImageUrl);

@@ -19,9 +19,6 @@ const options = {
     // background color or image element, `null` for transparent background
     background: null,
 
-    // content
-    text: 'no text',
-
     // corner radius relative to module width: 0.0 .. 0.5
     radius: 0,
 
