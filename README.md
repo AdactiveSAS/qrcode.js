@@ -14,15 +14,16 @@ qrCode.js is a web based QrCode generation library in javascript. It extends the
 ## Getting started
 
 ```javascript
-    npm i --save-dev qrcode.es
+    npm i qrcode.es
 ```
 OR
 ```javascript
-    yarn add --dev qrcode.es
+    yarn add qrcode.es
 ```
 
 ## Usage
 
+### ES6 Modules
 ```javascript
 import QrCode, {MODES} from 'qrcode.es';
     
@@ -33,7 +34,7 @@ const qrCodeSetting = {
     background: '#fff',
     mode: MODES.DRAW_WITH_IMAGE_BOX,
     radius: 0.5,
-    image: AdactiveLogo,
+    image: 'https://raw.githubusercontent.com/AdactiveSAS/qrcode.js/master/adactiveLogo.jpg',
     mSize: 0.15,
 };
 
@@ -41,6 +42,57 @@ const ele = document.getElementById("qrCode"); //Element must be an instance of 
 const qrCode = new QrCode(ele); //Initializing the QrCode
 await qrCode.generate(qrCodeSetting); // Function that generates the QrCode
 let image = this.qrCode.getImage(); // Function to get the data Url of the QrCode Image
+
+```
+
+### Browser
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html, body {
+                height: 100%;
+                width: 100%;
+                position: relative;
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="qrCode"></div>
+
+        <!-- Assuming node_modules is located in parent directory -->
+        <script src="../node_modules/qrcode.umd.js"></script>
+        <script type="application/javascript">
+
+            const image = './assets/logo.jpg'; // To modify path to the image url
+            const ele = document.getElementById("qrCode"); //Element must be an instance of HTMLCanvasElement or HTMLDivElement
+            const qrCode = new QrCode.qrcode(ele);
+
+            const qrCodeSetting = {
+                size: 400,
+                minVersion: 8,
+                text: 'http://adactive.com/',
+                background: '#fff',
+                mode: QrCode.MODES.DRAW_WITH_IMAGE_STRIP,
+                radius: 0.5,
+                image: image,
+                mSize: 0.15,
+            };
+
+            let qrCodeImageUrl = null;
+
+            qrCode.generate(qrCodeSetting)
+                .then(() => {
+                    qrCodeImageUrl = qrCode.getImage();
+                    console.log("[IMAGE URL] : ", qrCodeImageUrl);
+                });
+
+        </script>
+    </body>
+</html>
 
 ```
 
