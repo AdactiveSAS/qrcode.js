@@ -310,21 +310,21 @@ function loadImage(element, options) {
 }
 
 class qrcode {
-    constructor(ele) {
+    constructor(element) {
         this.element = null;
         this.canvasElement = null;
         this.image = null;
 
-        if (!(ele instanceof HTMLDivElement || ele instanceof HTMLCanvasElement)) {
+        if (!(element instanceof HTMLDivElement || element instanceof HTMLCanvasElement)) {
             throw new TypeError('Please provide a div element or canvas element render a qrCode canvas');
         }
 
-        if (ele && ele instanceof HTMLDivElement) {
-            this.element = ele;
+        if (element && element instanceof HTMLDivElement) {
+            this.element = element;
             this.canvasElement = document.createElement('canvas');
             this.element.appendChild(this.canvasElement);
-        } else if (ele && ele instanceof HTMLCanvasElement) {
-            this.canvasElement = ele;
+        } else if (element && element instanceof HTMLCanvasElement) {
+            this.canvasElement = element;
         }
     }
 
