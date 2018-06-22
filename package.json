@@ -2,7 +2,6 @@
   "name": "qrcode.es",
   "description": "QR Code Generator",
   "version": "0.0.1-rc.5",
-  "main": "build/qrcode.cjs.js",
   "module": "build/qrcode.esm.js",
   "browser": "build/qrcode.umd.js",
   "author": "Stanley Ong <stanley.ong@adactive.com>",
@@ -43,17 +42,17 @@
     "prepublishOnly": "npm run build",
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "node test/test.js",
     "pretest": "npm run build",
     "eslint": "eslint src"
   },
   "keywords": [
-    "adsum",
     "qrcode",
     "generator",
     "image",
     "label",
-    "color"
+    "color",
+    "es2015",
+    "es6"
   ],
   "files": [
     "build",
