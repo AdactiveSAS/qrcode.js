@@ -1,14 +1,6 @@
 import VendorQrCode from 'qrcode-generator';
 import defaultOptions from './defaultOptions';
 
-export const MODES = {
-    NORMAL: 0,
-    DRAW_WITH_LABEL_STRIP: 1,
-    DRAW_WITH_LABEL_BOX: 2,
-    DRAW_WITH_IMAGE_STRIP: 3,
-    DRAW_WITH_IMAGE_BOX: 4,
-};
-
 function drawBackgroundLabel(qr, context, settings) {
     const {
         size, mSize, fontname, label, mPosX, mPosY, mode, fontcolor
