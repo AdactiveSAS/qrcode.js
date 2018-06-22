@@ -1,7 +1,7 @@
 {
   "name": "qrcode.es",
   "description": "QR Code Generator",
-  "version": "0.0.1-rc.2",
+  "version": "0.0.1-rc.5",
   "main": "build/qrcode.cjs.js",
   "module": "build/qrcode.esm.js",
   "browser": "build/qrcode.umd.js",
