@@ -263,7 +263,7 @@ function createMinQRCode(text, level, minVersion, maxVersion, quiet) {
         }
     }
 
-    throw new Error('Too much data - Unable to generate QrCode');
+    throw new Error('Unable to generate QrCode');
 }
 
 function drawOnCanvas(element, options, imageElement = null) {
@@ -344,7 +344,11 @@ class qrcode {
         }
 
         promise = promise.then(() => {
-            this.image = this.canvasElement.toDataURL();
+            try {
+                this.image = this.canvasElement.toDataURL();
+            } catch (err) {
+                console.log(err);
+            }
         });
 
         return promise;
