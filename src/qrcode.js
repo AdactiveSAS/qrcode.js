@@ -61,12 +61,12 @@ function drawBackgroundImage(qr, context, settings) {
 
 function drawBackground(qr, context, settings) {
     const {
-        background, left, top, size, mode
+        background, size, mode
     } = settings;
 
     if (background) {
         context.fillStyle = background;
-        context.fillRect(left, top, size, size);
+        context.fillRect(0, 0, size, size);
     }
 
     if (mode === 1 || mode === 2) {
@@ -180,7 +180,7 @@ function drawModuleRounded(qr, context, settings, left, top, width, row, col) {
 function drawModules(qr, context, settings) {
     const { moduleCount } = qr;
     const {
-        size, radius, left, top, fill
+        size, radius, fill
     } = settings;
 
     const moduleSize = size / moduleCount;
@@ -195,8 +195,8 @@ function drawModules(qr, context, settings) {
     context.beginPath();
     for (row = 0; row < moduleCount; row += 1) {
         for (col = 0; col < moduleCount; col += 1) {
-            const l = left + col * moduleSize;
-            const t = top + row * moduleSize;
+            const l = col * moduleSize;
+            const t = row * moduleSize;
             const w = moduleSize;
 
             fn(qr, context, settings, l, t, w, row, col);

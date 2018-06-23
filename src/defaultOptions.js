@@ -6,10 +6,6 @@ const options = {
     // error correction level: `'L'`, `'M'`, `'Q'` or `'H'`
     ecLevel: 'H',
 
-    // offset in pixel if drawn onto existing canvas
-    left: 0,
-    top: 0,
-
     // size in pixel
     size: 500,
 
