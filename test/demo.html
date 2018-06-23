@@ -24,9 +24,10 @@
 
             const qrCodeSetting = {
                 size: 400,
+                ecLevel: QrCode.ecLevel.QUARTILE,
                 minVersion: 8,
                 background: '#fff',
-                mode: QrCode.MODES.DRAW_WITH_IMAGE_STRIP,
+                mode: QrCode.modes.DRAW_WITH_IMAGE_BOX,
                 radius: 0.5,
                 image: image,
                 mSize: 0.15,
