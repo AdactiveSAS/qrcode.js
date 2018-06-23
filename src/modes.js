@@ -1,4 +1,4 @@
-const MODES = {
+const modes = {
     NORMAL: 0,
     DRAW_WITH_LABEL_STRIP: 1,
     DRAW_WITH_LABEL_BOX: 2,
@@ -6,4 +6,4 @@ const MODES = {
     DRAW_WITH_IMAGE_BOX: 4,
 };
 
-export default MODES;
+export default modes;
