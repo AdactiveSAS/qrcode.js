@@ -52,7 +52,8 @@
     "label",
     "color",
     "es2015",
-    "es6"
+    "es6",
+    "js"
   ],
   "files": [
     "build",
