@@ -25,12 +25,12 @@ OR
 
 ### ES6 Modules
 ```javascript
-import QrCode, {MODES} from 'qrcode.es';
+import { qrcode, modes, ecLevel } from 'qrcode.es';
     
 const qrCodeSetting = {
     size: 400,
+    ecLevel: ecLevel.QUARTILE,
     minVersion: 8,
-    text: 'http://adactive.com/',
     background: '#fff',
     mode: MODES.DRAW_WITH_IMAGE_BOX,
     radius: 0.5,
@@ -38,9 +38,9 @@ const qrCodeSetting = {
     mSize: 0.15,
 };
 
-const ele = document.getElementById("qrCode"); //Element must be an instance of HTMLCanvasElement or HTMLDivElement
-const qrCode = new QrCode(ele); //Initializing the QrCode
-await qrCode.generate(qrCodeSetting); // Function that generates the QrCode
+const element = document.getElementById("qrCode"); //Element must be an instance of HTMLCanvasElement or HTMLDivElement
+const qrCode = new qrcode(element); //Initializing the QrCode
+await qrCode.generate('https://adactive.com', qrCodeSetting); // Function that generates the QrCode
 let image = this.qrCode.getImage(); // Function to get the data Url of the QrCode Image
 
 ```
@@ -68,15 +68,15 @@ let image = this.qrCode.getImage(); // Function to get the data Url of the QrCod
         <script type="application/javascript">
 
             const image = './assets/logo.jpg'; // To modify path to the image url
-            const ele = document.getElementById("qrCode"); //Element must be an instance of HTMLCanvasElement or HTMLDivElement
-            const qrCode = new QrCode.qrcode(ele);
+            const element = document.getElementById("qrCode"); //Element must be an instance of HTMLCanvasElement or HTMLDivElement
+            const qrCode = new QrCode.qrcode(element);
 
             const qrCodeSetting = {
                 size: 400,
+                ecLevel: QrCode.ecLevel.QUARTILE,
                 minVersion: 8,
-                text: 'http://adactive.com/',
                 background: '#fff',
-                mode: QrCode.MODES.DRAW_WITH_IMAGE_STRIP,
+                mode: QrCode.MODES.DRAW_WITH_IMAGE_BOX,
                 radius: 0.5,
                 image: image,
                 mSize: 0.15,
@@ -84,7 +84,7 @@ let image = this.qrCode.getImage(); // Function to get the data Url of the QrCod
 
             let qrCodeImageUrl = null;
 
-            qrCode.generate(qrCodeSetting)
+            qrCode.generate('https://adactive.com', qrCodeSetting)
                 .then(() => {
                     qrCodeImageUrl = qrCode.getImage();
                     console.log("[IMAGE URL] : ", qrCodeImageUrl);
@@ -96,10 +96,11 @@ let image = this.qrCode.getImage(); // Function to get the data Url of the QrCod
 
 ```
 
-## Functions
+## API
 
 ```javascript
-fucntion generate(ele: HTMLCanvasElement | HTMLDivElement): Promise
+constructor (element: instance of HTMLDivElement | instance of HTMLCanvasElement): qrcode
+fucntion generate(text: string, options: Object): Promise
 function getImage(): string
 ```
 
@@ -107,15 +108,12 @@ function getImage(): string
 
 | Name       | Type   | Default    | Description                                                     |
 | ---------- | ------ | ---------- | --------------------------------------------------------------- |
-| minVersion | number | 1          | Version Range: Minimum 1                                        |
-| maxVersion | number | 40         | Version Range: Maximum 40                                       |
-| ecLevel    | string | 'H'        | Error Correction Level                                          |
-| left       | number | 0          | Offset in pixel on existing Canvas Element                      |
-| top        | number | 0          | Offset in pixel on existing Canvas Element                      |
+| minVersion | number | 1          | Version Range: Minimum 1*                                       |
+| maxVersion | number | 40         | Version Range: Maximum 40*                                      |
+| ecLevel    | string | 'H'        | Error Correction Level*                                         |
 | size       | number | 500        | Size of QrCode in pixel                                         |
 | fill       | string | '#000'     | Color of Module in Color Code                                   |
-| background | string | null       | Background color or `null` for transparent elements             |
-| text       | string | 'no text'  | Content of QrCode                                               |
+| background | string | null       | Background color or `null` for transparent background           |
 | radius     | number | 0          | Corner radius relative to module width: Range from 0.0 to 0.5   |
 | quiet      | number | 0          | Quiet zone in modules (White border around the QrCode)          |
 | mode       | number | 0          | Mode of QrCode - Refer to the end of table for more information |
@@ -125,41 +123,41 @@ function getImage(): string
 | fontname   | string | 'sans'     | Font Name to be used                                            |
 | fontcolor  | string | '#000'     | Font Colour in Color Code                                       |
 | label      | string | 'no label' | Label used for Mode with Label                                  |
-| image      | string | null       | Image used for Mode with Image                                  | 
+| image      | string | null       | Image used for Mode with Image                                  |
 
-```javascript
-//Modes available for drawing of QrCode
-const MODES = {
-    NORMAL: 0,
-    DRAW_WITH_LABEL_STRIP: 1,
-    DRAW_WITH_LABEL_BOX: 2,
-    DRAW_WITH_IMAGE_STRIP: 3,
-    DRAW_WITH_IMAGE_BOX: 4,
-};
+**Modules**
 
-//Default Options
-const options = {
-    minVersion: 1,
-    maxVersion: 40,
-    ecLevel: 'H',
-    left: 0,
-    top: 0,
-    size: 500,
-    fill: '#000',
-    background: null,
-    text: 'no text',
-    radius: 0,
-    quiet: 0,
-    mode: 0,
-    mSize: 0.3,
-    mPosX: 0.5,
-    mPosY: 0.5,
-    label: 'no label',
-    fontname: 'sans',
-    fontcolor: '#000',
-    image: null,
-};
-```
+QrCode Modules refers to the black and white dots that make up the QrCode.
+
+**Version**
+
+[QrCode version](http://www.qrcode.com/en/about/version.html) ranges from 1 - 40 where which version has a different number of modules. Each higher version consists of a higher number of modules which allows the QrCode to contain more data.
+
+**Error Correction Level (ecLevel)**
+
+QR Code has [error correction](http://www.qrcode.com/en/about/error_correction.html) capability to restore data if the code is dirty or damaged. Four error correction levels are available for users to choose according to the operating environment.
+
+
+##Enums
+### ecLevel
+
+| Name     | Level | Error Correction Capability |
+| -------- | ---   | --------------------------- |
+| LOW      | 'L'   | ~7%                         |
+| MEDIUM   | 'M'   | ~15%                        |
+| QUARTILE | 'Q'   | ~25%                        |
+| HIGH     | 'H'   | ~30%                        |
+
+### Modes
+
+| Name                  | Description                                                       |
+| --------------------- | ----------------------------------------------------------------- |
+| NORMAL                | To generate a default QrCode                                      |
+| DRAW_WITH_LABEL_STRIP | To add a label with a white strip taking the width of the QrCode  |
+| DRAW_WITH_LABEL_BOX   | To add a label base on the length of text on the QrCode           |
+| DRAW_WITH_IMAGE_STRIP | To add an image with a white strip taking the width of the QrCode |
+| DRAW_WITH_IMAGE_BOX   | To add an image base on the image width on the QrCode             |
+
 
 ## License
 MIT License (MIT)
