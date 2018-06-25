@@ -1,4 +1,4 @@
-# qrcode.js
+# qrcode.es
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 ![circleCi](https://circleci.com/gh/AdactiveSAS/qrcode.js.svg?style=shield&circle-token=:circle-token)
 
