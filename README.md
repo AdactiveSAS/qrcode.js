@@ -32,7 +32,7 @@ const qrCodeSetting = {
     ecLevel: ecLevel.QUARTILE,
     minVersion: 8,
     background: '#fff',
-    mode: MODES.DRAW_WITH_IMAGE_BOX,
+    mode: modes.DRAW_WITH_IMAGE_BOX,
     radius: 0.5,
     image: 'https://raw.githubusercontent.com/AdactiveSAS/qrcode.js/master/adactiveLogo.jpg',
     mSize: 0.15,
