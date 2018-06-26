@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html, body {
+                height: 100%;
+                width: 100%;
+                position: relative;
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="qrCode"></div>
+
+        <!-- Assuming node_modules is located in parent directory -->
+        <script src="../build/qrcode.umd.js"></script>
+        <script type="application/javascript">
+
+            const image = './assets/logo.jpg'; // To modify path to the image url
+            const ele = document.getElementById("qrCode"); //Element must be an instance of HTMLCanvasElement or HTMLDivElement
+            const qrCode = new QrCode.qrcode(ele);
+
+            const qrCodeSetting = {
+                size: 400,
+                ecLevel: QrCode.ecLevel.QUARTILE,
+                minVersion: 8,
+                background: '#fff',
+                mode: QrCode.modes.DRAW_WITH_IMAGE_BOX,
+                radius: 0.5,
+                image: image,
+                mSize: 0.15,
+            };
+
+            let qrCodeImageUrl = null;
+
+            qrCode.generate('https://adactive.com', qrCodeSetting)
+                .then(() => {
+                    qrCodeImageUrl = qrCode.getImage();
+                    console.log("[IMAGE URL] : ", qrCodeImageUrl);
+                });
+
+        </script>
+    </body>
+</html>

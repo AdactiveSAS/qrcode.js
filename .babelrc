@@ -1,13 +1,13 @@
 {
   "presets": [
     [
-      "env",
-      {
+      "env", {
         "modules": false
       }
     ]
   ],
   "plugins": [
-    "external-helpers"
+    "external-helpers",
+    "transform-object-rest-spread"
   ]
 }

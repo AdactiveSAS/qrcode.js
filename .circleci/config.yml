@@ -1,0 +1,56 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+    eslint:
+        working_directory: ~/repo
+        docker:
+            - image: circleci/node:9
+        steps:
+            - checkout
+            - restore_cache: # special step to restore the dependency cache
+                    key: dependency-cache-{{ checksum "package.json" }}
+            - run: yarn install
+            - save_cache:
+                    key: dependency-cache-{{ checksum "package.json" }}
+                    paths:
+                        - node_modules
+                        - yarn.lock
+            - run: yarn eslint
+    publish:
+        working_directory: ~/repo
+        docker:
+            - image: circleci/node:9
+        steps:
+            - checkout
+            - restore_cache: # special step to restore the dependency cache
+                    key: dependency-cache-{{ checksum "package.json" }}
+            - run: yarn install
+            - save_cache:
+                    key: dependency-cache-{{ checksum "package.json" }}
+                    paths:
+                        - node_modules
+                        - yarn.lock
+            - run:
+                    name: Authenticate with registry
+                    command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+            - run: npm publish
+
+workflows:
+    version: 2
+    deploy:
+        jobs:
+            - eslint:
+                filters:
+                    tags:
+                        only: /.*/
+            - publish:
+                requires:
+                    - eslint
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /v[0-9]+\.[0-9]+\.[0-9]+.*/
